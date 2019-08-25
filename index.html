@@ -19,7 +19,23 @@
     body {
         font-family: 'Proxima Nova', sans-serif;
     }
-     
+    <div id="container" class="svg-container">
+</div>
+    .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 30%;
+        padding-bottom: 100%; /* aspect ratio */
+        vertical-align: top;
+        overflow: hidden;
+    }
+    .svg-content-responsive {
+        display: inline-block;
+        position: absolute;
+        top: 10px;
+        left: 0;
+    }
+
     .county {
         font: 14px sans-serif;
         font-weight: bold;
@@ -38,7 +54,7 @@
      
     div.tooltip {
         position: absolute;
-        left: 75px;
+        left: 0px;
         text-align: center;
         height: 16px;
         padding: 10px;
@@ -51,10 +67,10 @@
     p {
         font-family: 'Proxima Nova', sans-serif;
         font-size:10px;
-        margin: 20px 0 0 10px;
+        margin: 0px 0 0 10px;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width:100px) {
     .d3map {
         display: none;
     }
@@ -63,7 +79,7 @@
 
 <body>
          <script type="text/javascript">
-         var width = 1000, height = 500;
+         var width = 500, height = 500;
          var color_domain = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000]
          var ext_color_domain = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000]
          var legend_labels = ["< 500", "500+", "1000+", "1500+", "2000+", "2500+", "3000+", "3500+", "4000+", "4500+", "5000+", "5500+", "6000+"]
@@ -76,11 +92,22 @@
          .attr("class", "tooltip")
          .style("opacity", 0);
          
-        var svg = d3.select("body").append("svg")
-         .attr("width", width)
-         .attr("height", height)
-         .style("margin", "-15px auto")
-         .attr("transform", "rotate(32deg)");
+        var svg = d3.select("body")
+             .append("svg")
+   //responsive SVG needs these 2 attributes and no width and height attr
+             .attr("viewBox", "300 0 600 500")
+             .attr()
+             .attr("transform", "rotate(33)")
+             .attr("width",  400)
+             .attr("height", 400);
+   //class to make it responsive
+
+//         .style("margin", "-15px auto")
+         var text = svg.selectAll("text")
+         var textLabels = text.attr("x", 500)
+                         .attr("y", 400)
+                         .text("testxsds")               
+         
          var path = d3.geo.path()
          
 
@@ -112,6 +139,8 @@
             }); 
         };
 
+
+
         data.forEach(function(d) {
          pairRateWithId[d.id] = +d.rate;
          pairNameWithId[d.id] = d.name;
@@ -119,6 +148,8 @@
          pairRate2WithId[d.id] = +d.rate2;
          pairRate3WithId[d.id] = +d.rate3;
          });
+         
+
          svg.append("g")
          .attr("class", "county")
          .selectAll("path")
@@ -132,6 +163,7 @@
          .on("mouseover", function(d) {
             var sel = d3.select(this);
             sel.moveToFront();
+
          d3.select(this).transition().duration(300).style({'opacity': 1, 'stroke': 'black', 'stroke-width': 1.5});
          div.transition().duration(300)
          .style("opacity", 1)
@@ -143,6 +175,8 @@
          .on("mouseout", function() {
             var sel = d3.select(this);
             sel.moveToBack();
+
+
          d3.select(this)
          .transition().duration(300)
          .style({'opacity': 0.8, 'stroke': 'white', 'stroke-width': 1});
@@ -150,18 +184,12 @@
          .style("opacity", 0);
          })
 
-           svg.append('path')
-                .datum(topojson.mesh(us, us.objects.states, function (a, b) { return a !== b; }))
-                .attr('fill', 'none')
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 4)
-                .attr('d', path);
 
          };
 
 
         </script>
-<p>Data Visualization for "Marsooli, R., N. Lin, K. Emanuel, and K. Feng (2019). Climate change exacerbates hurricane flood hazards along US Atlantic and Gulf Coasts in spatially varying patterns. Nature Communications." (made by Kairui Feng)</p>
+<p>Data Visualization for "Marsooli, R., N. Lin, K. Emanuel, and K. Feng (2019). Climate change </p><p>exacerbates hurricane flood hazards along US Atlantic and Gulf Coasts in spatially varying</p> <p>patterns. Nature Communications." (made by Kairui Feng)</p>
 </body>
 
 </html>
