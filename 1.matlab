@@ -1,0 +1,118 @@
+Party = 1;
+Info = 2;
+Race  = 3;
+Edu = 4;
+Year = 5;
+Age = 6;
+Gender = 7;
+Climate = 8;
+Local_att = 9;
+Local_com = 10;
+Imm_family = 11;
+Gov = 12;
+Buy = 13;
+reason = 14;
+Flood_zone = 15;
+Private = 16;
+Public = 17;
+Climate_sup = 18;
+Gov_sup = 19;
+N = 19;
+dag = zeros(N,N);
+dag(1,[2,8,9,12]) = 1;
+dag(2,[8,9])=1;
+dag(3,[4]) = 1;
+dag(4,[8,2,11]) = 1;
+dag(5,9) = 1;
+dag(6,[1,3]) = 1;
+dag(7,[1,4]) = 1;
+dag(8,[11,12,9]) = 1;
+dag(9,[10,11]) =1;
+dag(10,[17]) =1;
+dag(11,[10,14]) = 1;
+dag(12,14) = 1;
+dag(13,16) = 1;
+dag(14,[13,16,17]) = 1;
+dag(15,14) = 1;
+dag(16,[18,19]) = 1;
+dag(17,[18,19]) = 1;
+temp = randsample(1:3856, 30000, true, data(:,20)');
+samples = data(temp,1:19)';
+samples(12,:) = samples(12,:)-1;
+samples(5,find(samples(5,:)==5)) = samples(5,find(samples(5,:)==5))-1;
+temp = samples';
+temp(:,20) = temp(:,17)+temp(:,16)+rand(length(temp),1);
+temp(:,21) = temp(:,17)-temp(:,16)+rand(length(temp),1);
+temp(:,22) = 2;
+temp(find(temp(:,20)<=quantile(temp(:,20),0.228)),22) = 1;
+temp(find(temp(:,20)>=quantile(temp(:,20),1-0.318)),22) = 3;
+temp(:,23) = 2;
+temp(find(temp(:,21)<=quantile(temp(:,21),0.228)),23) = 1;
+temp(find(temp(:,21)>=quantile(temp(:,21),1-0.318)),23) = 3;
+samples(18,:) = temp(:,22)';
+samples(19,:) = temp(:,23)';
+for i = 1:19
+node_sizes(i) =length(unique(samples(i,:)));
+end
+bnet2 = mk_bnet(dag, node_sizes);
+bnet2.CPD{Party} = tabular_CPD(bnet2,Party);
+bnet2.CPD{Info} = tabular_CPD(bnet2,Info);
+bnet2.CPD{Race} = tabular_CPD(bnet2,Race);
+bnet2.CPD{Edu} = tabular_CPD(bnet2,Edu);
+bnet2.CPD{Year} = tabular_CPD(bnet2,Year);
+bnet2.CPD{Age} = tabular_CPD(bnet2,Age);
+bnet2.CPD{Gender} = tabular_CPD(bnet2,Gender);
+bnet2.CPD{Climate} = tabular_CPD(bnet2,Climate);
+bnet2.CPD{Local_att} = tabular_CPD(bnet2,Local_att);
+bnet2.CPD{Local_com} = tabular_CPD(bnet2,Local_com);
+bnet2.CPD{Imm_family} = tabular_CPD(bnet2,Imm_family);
+bnet2.CPD{Gov} = tabular_CPD(bnet2,Gov);
+bnet2.CPD{Buy} = tabular_CPD(bnet2,Buy);
+bnet2.CPD{reason} = tabular_CPD(bnet2,reason);
+bnet2.CPD{Flood_zone} = tabular_CPD(bnet2,Flood_zone);
+bnet2.CPD{Private} = tabular_CPD(bnet2,Private);
+bnet2.CPD{Public} = tabular_CPD(bnet2,Public);
+bnet2.CPD{Climate_sup} = tabular_CPD(bnet2,Climate_sup);
+bnet2.CPD{Gov_sup} = tabular_CPD(bnet2,Gov_sup);
+A = [];
+bnet3 = learn_params(bnet2,samples);
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+evidence{reason} = 1;
+1
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Gov_sup);
+A(1:3) = marg1.T;
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+evidence{reason} = 2;
+2
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Gov_sup);
+A(4:6) = marg1.T;
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+evidence{reason} = 3;
+3
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Gov_sup);
+A(7:9) = marg1.T;
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+evidence{reason} = 4;
+4
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Gov_sup);
+A(10:12)=marg1.T;
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+0
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Gov_sup);
+marg1.T
+engine = jtree_inf_engine(bnet3);
+evidence = cell(1,N);
+0
+[engine, loglike] = enter_evidence(engine, evidence);
+marg1 = marginal_nodes(engine,Climate_sup);
+marg1.T
