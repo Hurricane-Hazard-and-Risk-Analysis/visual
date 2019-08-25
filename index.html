@@ -167,7 +167,7 @@
          d3.select(this).transition().duration(300).style({'opacity': 1, 'stroke': 'black', 'stroke-width': 1.5});
          div.transition().duration(300)
          .style("opacity", 1)
-         div.text(pairNameWithId[d.id] + ": Historical Level " + pairRateWithId[d.id]+" m , Future Climate " + pairRate1WithId[d.id] + "(" + pairRate2WithId[d.id] +","+pairRate3WithId[d.id]+")")
+         div.text(pairNameWithId[d.id] + ":Historical flood level " + pairRateWithId[d.id]+" m , Future flood level " + pairRate1WithId[d.id] + " (" + pairRate2WithId[d.id] +","+pairRate3WithId[d.id]+")m")
 
          .style("left", (d3.event.pageX) + "px")
          .style("top", (d3.event.pageY -30) + "px");
@@ -189,7 +189,7 @@
 
 
         </script>
-<p>Data Visualization for "Marsooli, R., N. Lin, K. Emanuel, and K. Feng (2019). Climate change </p><p>exacerbates hurricane flood hazards along US Atlantic and Gulf Coasts in spatially varying</p> <p>patterns. Nature Communications." (made by Kairui Feng)</p>
+<p>Data Visualization for "Marsooli, R., N. Lin, K. Emanuel, and K. Feng (2019). Climate change </p><p>exacerbates hurricane flood hazards along US Atlantic and Gulf Coasts in spatially varying</p> <p>patterns. Nature Communications." For each coastal county, the historical flood level refers to estimated 100-year flood level under the historical climate of 1980-2005, and the future flood level refers to weighted average (and six CMIP5 model range) 100-year flood level under the projected climate (RCP8.5) of 2070-2095.(made by Kairui Feng)</p>
 </body>
 
 </html>
