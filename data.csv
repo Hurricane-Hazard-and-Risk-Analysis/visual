@@ -2053,7 +2053,7 @@ id,name,rate,rate1,rate2,rate3
 37125,Moore,0,0,0,0
 37127,Nash,0,0,0,0
 37129,New Hanover,1.221,2.823,1.31,4.398
-37131,Northampton,0.943,2.612,1.003,3.685
+37131,Northampton,0,0,0,0
 37133,Onslow,1.423,2.908,1.153,4.309
 37135,Orange,0,0,0,0
 37137,Pamlico,0,0,0,0
@@ -2980,7 +2980,7 @@ id,name,rate,rate1,rate2,rate3
 51121,Montgomery,0,0,0,0
 51125,Nelson,0,0,0,0
 51127,New Kent,1.539,3.105,1.276,4.267
-51131,Northampton,0,0,0,0
+51131,Northampton,0.943,2.612,1.003,3.685
 51133,Northumberland,0.55,2.232,0.328,2.889
 51135,Nottoway,0,0,0,0
 51137,Orange,0,0,0,0
